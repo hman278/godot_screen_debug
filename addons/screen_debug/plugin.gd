@@ -26,6 +26,7 @@ func __on_scene_changed(root: Node) -> void:
 			container.set_owner(root)
 			container.add_to_group('_container', true)
 			container.alignment = HALIGN_LEFT
+			
 		
 		elif containers.size() == 1:
 			return
