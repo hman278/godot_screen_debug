@@ -8,12 +8,20 @@ NOTE: VBoxContainer may scale down/up due to its parent being transformed
 func _enter_tree():
 	add_autoload_singleton('Debug', 'res://addons/screen_debug/debug.gd')
 	connect('scene_changed', self, '__on_scene_changed')
+	connect('resource_saved', self, '__on_resource_saved')
 
 func _exit_tree():
 	remove_autoload_singleton('Debug')
 
 func __on_scene_changed(root: Node) -> void:
-	if root:
+	__create_container(root)
+
+func __on_resource_saved(resource: Resource) -> void:
+	__create_container(get_tree().get_edited_scene_root())
+
+func __create_container(root) -> void:
+	root = get_tree().get_edited_scene_root()
+	if (root):
 		# create a container for scenes that don't have it
 		var containers: Array = []
 		for child in root.get_children():
